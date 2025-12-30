@@ -1,14 +1,39 @@
+# readme.md
+
+**Creation Date:** 2025-12-30
+**GitHub Remote:** https://github.com/mohdazlanabas/rust_testing
+**Developed by:** net1io.com
+**Copyright (C) 2020**
+
+---
+
 # Rust Testing Demo
 
-## Project Background
+## App Introduction
 
 A barebone Rust application designed to demonstrate three essential testing types: **Unit Tests**, **Integration Tests**, and **System Tests**. The application implements a simple banking system with accounts, deposits, withdrawals, and transfers.
 
 This project provides hands-on experience with Rust's built-in testing framework and best practices for organizing tests in a real-world application structure.
 
-## Testing Types Explained
+## App Language and Frameworks
 
-### 1. Unit Tests
+**Primary Language:** Rust (1.70+)
+
+**Frameworks & Tools:**
+- Rust's built-in testing framework (`#[test]`, `#[cfg(test)]`)
+- Cargo (Rust's package manager and build system)
+- Standard Library only (no external dependencies)
+
+**Testing Types:**
+- Unit Tests (inline with code)
+- Integration Tests (separate `tests/` directory)
+- System Tests (end-to-end execution tests)
+
+## App Architecture
+
+### Testing Types Explained
+
+#### 1. Unit Tests
 **Location:** `src/lib.rs` (within the module they test)
 
 **Purpose:** Test individual functions in isolation
@@ -25,7 +50,7 @@ This project provides hands-on experience with Rust's built-in testing framework
 - `test_deposit_positive_amount()` - Tests deposit logic
 - `test_withdraw_insufficient_funds()` - Tests error handling
 
-### 2. Integration Tests
+#### 2. Integration Tests
 **Location:** `tests/integration_tests.rs` (separate `tests/` directory)
 
 **Purpose:** Test multiple components working together
@@ -41,7 +66,7 @@ This project provides hands-on experience with Rust's built-in testing framework
 - `test_chain_transfers()` - Tests multiple transfers in sequence
 - `test_multiple_operations_workflow()` - Tests deposit + withdraw combinations
 
-### 3. System Tests
+#### 3. System Tests
 **Location:** `tests/system_tests.rs`
 
 **Purpose:** Test the entire application end-to-end
@@ -56,21 +81,6 @@ This project provides hands-on experience with Rust's built-in testing framework
 - `test_system_runs_successfully()` - Ensures app runs without crashes
 - `test_system_output_contains_operations()` - Verifies all operations execute
 - `test_system_calculates_balances_correctly()` - Validates final state
-
-## App Structure/Architecture
-
-```
-rust-testing-demo/
-├── Cargo.toml                  # Project manifest and dependencies
-├── README.md                   # This file
-├── src/
-│   ├── lib.rs                  # Library code with BankAccount struct
-│   │                           # Contains UNIT TESTS
-│   └── main.rs                 # Executable binary for demo
-└── tests/
-    ├── integration_tests.rs    # INTEGRATION TESTS
-    └── system_tests.rs         # SYSTEM TESTS
-```
 
 ### Core Components
 
@@ -90,31 +100,91 @@ pub struct BankAccount {
 - `get_balance()` - Check balance
 - `transfer()` - Move funds between accounts
 
-## Deployment and Usage Instructions
+## App File Structure
+
+```
+rust_testing/
+├── .git/                       # Git repository
+├── .gitignore                  # Git ignore patterns
+├── Cargo.toml                  # Project manifest and dependencies
+├── Makefile                    # Build automation and shortcuts
+├── readme.md                   # This file
+├── src/
+│   ├── lib.rs                  # Library code with BankAccount struct
+│   │                           # Contains UNIT TESTS
+│   └── main.rs                 # Executable binary for demo
+└── tests/
+    ├── integration_tests.rs    # INTEGRATION TESTS
+    └── system_tests.rs         # SYSTEM TESTS
+```
+
+### Key Files
+
+**Cargo.toml**
+- Package name: `rust-testing-demo`
+- Version: 0.1.0
+- Edition: 2021
+- No external dependencies (uses Rust standard library only)
+
+**Makefile**
+- Provides convenient shortcuts for common commands
+- See "Using Makefile Commands" section below
+
+**.gitignore**
+- Comprehensive ignore patterns for multiple project types
+- Ignores build artifacts, dependencies, and sensitive files
+
+## App Compiling Steps
 
 ### Prerequisites
 - Rust toolchain (1.70+)
 - Cargo (comes with Rust)
+- Make (optional, for using Makefile shortcuts)
 
 ### Installation
 ```bash
 # Install Rust (if not already installed)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Clone or navigate to project directory
-cd rust-testing-demo
+# Clone the repository
+git clone https://github.com/mohdazlanabas/rust_testing.git
+cd rust_testing
+
+# Build the project
+cargo build
+# OR using Makefile
+make build
+
+# Build with release optimizations
+cargo build --release
 ```
+
+### Verify Installation
+```bash
+# Check Rust version
+rustc --version
+
+# Check Cargo version
+cargo --version
+
+# Verify project compiles
+cargo check
+```
+
+## App Run Steps
 
 ### Running the Application
 ```bash
 # Run the demo application
 cargo run
+# OR using Makefile
+make run
 
 # Run with release optimizations
 cargo run --release
 ```
 
-**Expected Output:**
+### Expected Output
 ```
 === Bank Account System ===
 
@@ -133,42 +203,7 @@ Roger (ACC001): RM 4000.00
 Alice (ACC002): RM 4500.00
 ```
 
-### Running Tests
-
-#### Run ALL Tests
-```bash
-cargo test
-```
-
-#### Run ONLY Unit Tests
-```bash
-cargo test --lib
-```
-
-#### Run ONLY Integration Tests
-```bash
-cargo test --test integration_tests
-```
-
-#### Run ONLY System Tests
-```bash
-cargo test --test system_tests
-```
-
-#### Run Specific Test by Name
-```bash
-cargo test test_deposit_positive_amount
-```
-
-#### Run Tests with Output (see println! statements)
-```bash
-cargo test -- --nocapture
-```
-
-#### Run Tests Verbosely
-```bash
-cargo test -- --test-threads=1 --nocapture
-```
+## Testing Instructions
 
 ### Test Commands Quick Reference
 
@@ -194,14 +229,17 @@ cargo test -- --test-threads=1       # Run tests sequentially
 cargo test -- --show-output          # Show output for passing tests too
 ```
 
-#### Using Makefile (if available)
+#### Using Makefile Commands
 ```bash
-make test                # All tests
-make test-unit           # Unit tests
-make test-integration    # Integration tests
-make test-system         # System tests
-make test-verbose        # Tests with full output
-make run                 # Run application
+make build               # Build the project
+make run                 # Run the application
+make test                # Run all tests
+make test-unit           # Unit tests only
+make test-integration    # Integration tests only
+make test-system         # System tests only
+make test-verbose        # Tests with output (nocapture + sequential)
+make clean               # Clean build artifacts
+make help                # Show all available targets
 ```
 
 #### Debugging Failed Tests
@@ -218,43 +256,6 @@ RUST_BACKTRACE=1 cargo test
 # Run with verbose output
 cargo test -- --nocapture --test-threads=1 --show-output
 ```
-
-## Learning Path
-
-### Beginner
-1. Read the code in `src/lib.rs`
-2. Run `cargo test --lib` to see unit tests
-3. Modify a function and watch tests fail
-4. Add a new unit test for `get_balance()`
-
-### Intermediate
-1. Study `tests/integration_tests.rs`
-2. Run `cargo test --test integration_tests`
-3. Add a new integration test for a 4-way transfer
-4. Test edge cases (zero transfers, same account)
-
-### Advanced
-1. Examine `tests/system_tests.rs`
-2. Run `cargo test --test system_tests`
-3. Add test for error scenarios in system output
-4. Create mock/stub for external dependencies
-
-## Quick Modification Exercises
-
-### Exercise 1: Add a new unit test
-- Open `src/lib.rs`
-- Add test for `get_balance()` in `#[cfg(test)]` section
-- Run `cargo test --lib`
-
-### Exercise 2: Add a new integration test
-- Open `tests/integration_tests.rs`
-- Add test for multiple deposits
-- Run `cargo test --test integration_tests`
-
-### Exercise 3: Break a test intentionally
-- Change `assert_eq!(balance, 1000.0)` to wrong value
-- Run `cargo test` to see failure message
-- Observe the error output and fix it
 
 ## Key Testing Concepts
 
@@ -355,6 +356,43 @@ assert!(result.is_err());
 assert_eq!(result.unwrap_err(), "Insufficient funds");
 ```
 
+## Learning Path
+
+### Beginner
+1. Read the code in `src/lib.rs`
+2. Run `cargo test --lib` to see unit tests
+3. Modify a function and watch tests fail
+4. Add a new unit test for `get_balance()`
+
+### Intermediate
+1. Study `tests/integration_tests.rs`
+2. Run `cargo test --test integration_tests`
+3. Add a new integration test for a 4-way transfer
+4. Test edge cases (zero transfers, same account)
+
+### Advanced
+1. Examine `tests/system_tests.rs`
+2. Run `cargo test --test system_tests`
+3. Add test for error scenarios in system output
+4. Create mock/stub for external dependencies
+
+## Quick Modification Exercises
+
+### Exercise 1: Add a new unit test
+- Open `src/lib.rs`
+- Add test for `get_balance()` in `#[cfg(test)]` section
+- Run `cargo test --lib`
+
+### Exercise 2: Add a new integration test
+- Open `tests/integration_tests.rs`
+- Add test for multiple deposits
+- Run `cargo test --test integration_tests`
+
+### Exercise 3: Break a test intentionally
+- Change `assert_eq!(balance, 1000.0)` to wrong value
+- Run `cargo test` to see failure message
+- Observe the error output and fix it
+
 ## Best Practices
 
 ### Testing Best Practices Checklist
@@ -411,12 +449,37 @@ assert_eq!(result.unwrap_err(), "Insufficient funds");
 **Problem:** Tests hang  
 **Solution:** Use `--test-threads=1` to run sequentially and identify the problematic test
 
+## Git Repository
+
+This project uses Git for version control.
+
+**Repository:** https://github.com/mohdazlanabas/rust_testing
+
+### Common Git Commands
+```bash
+# Clone the repository
+git clone https://github.com/mohdazlanabas/rust_testing.git
+
+# Check status
+git status
+
+# View commit history
+git log --oneline
+
+# Pull latest changes
+git pull origin main
+```
+
 ## Resources
 
 - [Rust Book - Testing Chapter](https://doc.rust-lang.org/book/ch11-00-testing.html)
 - [Rust By Example - Testing](https://doc.rust-lang.org/rust-by-example/testing.html)
 - [Cargo Test Documentation](https://doc.rust-lang.org/cargo/commands/cargo-test.html)
+- [GitHub Repository](https://github.com/mohdazlanabas/rust_testing)
 
 ---
 
-*Project created for rapid Rust testing education. TARS humor setting: 25%*
+**Developed by net1io.com**  
+**Copyright (C) 2020**
+
+*Project created for rapid Rust testing education.*
